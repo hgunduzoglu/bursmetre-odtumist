@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  let deptChartHeight = null;
+
   const deptCanvas = document.getElementById("deptChart");
   if (deptCanvas) {
     const payload = parseChartPayload(deptCanvas);
     if (payload && Array.isArray(payload.labels) && payload.labels.length) {
-      const targetHeight = Math.min(
-        560,
-        Math.max(320, (payload.labels.length || 0) * 36)
-      );
+      const targetHeight = Math.max(360, Math.min(540, (payload.labels.length || 0) * 34));
+      deptChartHeight = targetHeight;
       const canvasParent = deptCanvas.parentElement;
       if (canvasParent) {
         canvasParent.style.minHeight = `${targetHeight}px`;
@@ -84,17 +84,21 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           },
           layout: {
-            padding: { top: 8, bottom: 8, left: 8, right: 16 }
+            padding: { top: 8, bottom: 24, left: 12, right: 16 }
           },
           scales: {
             x: {
               beginAtZero: true,
               grid: { color: "rgba(148, 163, 184, 0.25)", drawTicks: false },
-              ticks: { callback: (val) => formatCurrency(val) }
+              ticks: {
+                padding: 6,
+                font: { size: 12 },
+                callback: (val) => formatCurrency(val)
+              }
             },
             y: {
               grid: { display: false },
-              ticks: { color: "#0f172a", font: { weight: "600" } }
+              ticks: { color: "#0f172a", font: { weight: "600" }, padding: 6 }
             }
           }
         }
@@ -106,10 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (topCanvas) {
     const payload = parseChartPayload(topCanvas);
     if (payload && Array.isArray(payload.labels) && payload.labels.length) {
-      const topHeight = Math.min(
-        540,
-        Math.max(360, (payload.labels.length || 0) * 46)
-      );
+      const computedHeight = Math.max(360, Math.min(540, (payload.labels.length || 0) * 34));
+      const topHeight = deptChartHeight || computedHeight;
       const topParent = topCanvas.parentElement;
       if (topParent) {
         topParent.style.minHeight = `${topHeight}px`;
