@@ -362,11 +362,6 @@ $progress = ($goal > 0)
     ? min(100, round(($total_donation / $goal) * 100, 1))
     : 0;
 
-$students_per_burs = 38250;
-$burs_students_collected = ($students_per_burs > 0)
-    ? round($total_donation / $students_per_burs)
-    : 0;
-
 // Prepare chart payloads.
 $dept_chart_totals = array_slice($dept_totals, 0, 20, true);
 $dept_labels = array_keys($dept_chart_totals);
@@ -449,7 +444,6 @@ $max_dept_amount = !empty($dept_race) ? max(array_column($dept_race, 'amount')) 
             </div>
             <h1>İstanbul Maratonu ODTÜMİST Burs Kampanyaları</h1>
             <p>ODTÜ'lü öğrenciler için koşuyoruz.</p>
-            <p class="burs-hero__sub"><?php echo esc_html($burs_students_collected); ?> Öğrencinin Bursu Toplandı</p>
             <div class="burs-hero__progress">
                 <div class="burs-progress">
                     <div class="burs-progress__inner" data-progress="<?php echo esc_attr($progress); ?>"></div>

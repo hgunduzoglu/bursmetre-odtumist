@@ -40,7 +40,7 @@
 .burs-hero__body {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 840px;
 }
 
 .burs-hero__meta {
@@ -68,12 +68,19 @@
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 8px;
+  white-space: nowrap;
 }
 
 .burs-hero p {
   font-size: 18px;
   opacity: 0.94;
   margin: 0;
+}
+.burs-hero__sub {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .burs-hero__progress {
@@ -522,6 +529,10 @@
   }
   .burs-hero h1 {
     font-size: 32px;
+    white-space: normal;
+  }
+  .burs-hero__sub {
+    font-size: 15px;
   }
 }
 
@@ -540,6 +551,10 @@
 @media (max-width: 580px) {
   .burs-hero h1 {
     font-size: 28px;
+    white-space: normal;
+  }
+  .burs-hero__sub {
+    font-size: 14px;
   }
   .burs-hero__totals {
     flex-direction: column;
