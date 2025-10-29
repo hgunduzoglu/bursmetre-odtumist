@@ -308,9 +308,9 @@ if ($kamp_rows) {
             $campaigns[$key]['department'] = $dept;
         }
 
-        $goal = bursmetre_parse_amount(bursmetre_get_value($row, $kamp_headers, $col_k_goal));
-        if ($goal > 0) {
-            $campaigns[$key]['goal'] = $goal;
+        $campaign_goal = bursmetre_parse_amount(bursmetre_get_value($row, $kamp_headers, $col_k_goal));
+        if ($campaign_goal > 0) {
+            $campaigns[$key]['goal'] = $campaign_goal;
         }
 
         if ($col_k_amt) {
@@ -383,7 +383,8 @@ uasort($campaigns_sorted, function ($a, $b) {
     return $b['amount'] <=> $a['amount'];
 });
 
-$top_campaigns = array_slice($campaigns_sorted, 0, 10);
+$rank_list = array_values($campaigns_sorted);
+$top_campaigns = array_slice($rank_list, 0, 10);
 $top_labels = array_map(function ($item) {
     return $item['name'];
 }, $top_campaigns);
@@ -397,8 +398,6 @@ for ($i = 0; $i < count($top_values); $i++) {
 }
 
 // Ranking list uses full campaign list.
-$rank_list = array_values($campaigns_sorted);
-
 // Department race (same ordering as dept_totals).
 $dept_race = [];
 foreach ($dept_totals as $dept => $value) {

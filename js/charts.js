@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const payload = parseChartPayload(deptCanvas);
     if (payload && Array.isArray(payload.labels) && payload.labels.length) {
       const targetHeight = Math.min(
-        520,
-        Math.max(260, (payload.labels.length || 0) * 34)
+        560,
+        Math.max(320, (payload.labels.length || 0) * 36)
       );
       const canvasParent = deptCanvas.parentElement;
       if (canvasParent) {
@@ -106,6 +106,18 @@ document.addEventListener("DOMContentLoaded", function () {
   if (topCanvas) {
     const payload = parseChartPayload(topCanvas);
     if (payload && Array.isArray(payload.labels) && payload.labels.length) {
+      const topHeight = Math.min(
+        540,
+        Math.max(360, (payload.labels.length || 0) * 46)
+      );
+      const topParent = topCanvas.parentElement;
+      if (topParent) {
+        topParent.style.minHeight = `${topHeight}px`;
+        topParent.style.height = `${topHeight}px`;
+      }
+      topCanvas.height = topHeight;
+      topCanvas.style.height = `${topHeight}px`;
+
       new Chart(topCanvas, {
         type: "bar",
         data: {
@@ -136,22 +148,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           },
           layout: {
-            padding: { top: 8, bottom: 16, left: 8, right: 16 }
+            padding: { top: 8, bottom: 32, left: 8, right: 16 }
           },
           scales: {
             x: {
               grid: { color: "rgba(148, 163, 184, 0.18)", drawTicks: false },
               ticks: {
                 color: "#0f172a",
-                font: { weight: "600" },
+                font: { weight: "600", size: 12 },
                 autoSkip: false,
-                maxRotation: 40,
-                minRotation: 28,
-                callback: (value, index, ticks) => {
-                  const tick = ticks[index];
-                  const label = tick && typeof tick.label === "string" ? tick.label : `${value}`;
-                  return label.length > 18 ? `${label.slice(0, 18)}…` : label;
-                }
+                maxRotation: 48,
+                minRotation: 48,
+                align: "end",
+                crossAlign: "far",
+                padding: 6
               }
             },
             y: {
