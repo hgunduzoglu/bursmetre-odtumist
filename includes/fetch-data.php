@@ -366,6 +366,9 @@ $students_per_burs = 38250;
 $burs_students_collected = ($students_per_burs > 0)
     ? round($total_donation / $students_per_burs)
     : 0;
+$students_formatted = function_exists('number_format_i18n')
+    ? number_format_i18n($burs_students_collected)
+    : number_format($burs_students_collected, 0, '', '.');
 
 // Prepare chart payloads.
 $dept_chart_totals = array_slice($dept_totals, 0, 20, true);
@@ -440,16 +443,21 @@ $max_dept_amount = !empty($dept_race) ? max(array_column($dept_race, 'amount')) 
 
 <div class="burs-dashboard">
     <section class="burs-hero">
-        <div class="burs-hero__body">
+        <div class="        <div class="burs-hero__body">
             <div class="burs-hero__meta">
-                <span class="burs-hero__chip">
-                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3L1 9l11 6l9-4.91V17h2V9zM5.56 13.55L4 14.39V17l8 4l8-4v-2.61l-9 4.91z"/></svg>
+                <span class="burs-hero__chip burs-hero__chip--meta">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3l9 4v4c0 5.52-4.48 10-10 10S2 16.52 2 11V7zM4 8.2v2.8c0 4.41 3.59 8 8 8s8-3.59 8-8V8.2l-8-3.6zM12 9a3 3 0 0 1 2.82 4H15a2 2 0 0 0-2-2a2 2 0 0 0-1.87 1.25l-1.84-.78A3.99 3.99 0 0 1 12 9Z"/></svg>
                     <?php echo esc_html($hero_caption); ?>
                 </span>
             </div>
-            <h1>İstanbul Maratonu ODTÜMİST Burs Kampanyaları</h1>
-            <p>ODTÜ'lü öğrenciler için koşuyoruz.</p>
-            <p class="burs-hero__sub"><?php echo esc_html($burs_students_collected); ?> Öğrencinin Bursu Toplandı</p>
+            <h1>&#304;stanbul Maratonu ODT&#220;M&#304;ST Burs Kampanyalar&#305;</h1>
+            <p>ODT&#220;'l&#252; &#246;&#287;renciler i&#231;in ko&#351;uyoruz.</p>
+            <div class="burs-hero__sub">
+                <span class="burs-hero__chip burs-hero__chip--students">
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3L1 9l11 6l9-4.91V17h2V9zM12 21l-8-4.5V11l8 4.5l8-4.5v5.5z"/></svg>
+                    <span><strong><?php echo esc_html($students_formatted); ?></strong> &#214;&#287;rencinin Bursu Topland&#305;</span>
+                </span>
+            </div>
             <div class="burs-hero__progress">
                 <div class="burs-progress">
                     <div class="burs-progress__inner" data-progress="<?php echo esc_attr($progress); ?>"></div>

@@ -41,6 +41,7 @@
   position: relative;
   z-index: 1;
   max-width: 840px;
+  margin: 0 auto;
 }
 
 .burs-hero__meta {
@@ -77,10 +78,49 @@
   margin: 0;
 }
 .burs-hero__sub {
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 6px;
-  color: rgba(255, 255, 255, 0.92);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 18px auto 0;
+}
+.burs-hero__chip--meta {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+}
+.burs-hero__chip--meta svg {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+}
+.burs-hero__chip--students {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.18));
+  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+.burs-hero__chip--students svg {
+  flex: 0 0 auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+.burs-hero__chip--students span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.burs-hero__chip--students span strong {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
 }
 
 .burs-hero__progress {
@@ -532,7 +572,19 @@
     white-space: normal;
   }
   .burs-hero__sub {
-    font-size: 15px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .burs-hero__chip--students {
+    font-size: 16px;
+  }
+  .burs-hero__chip--students span {
+    gap: 4px;
+  }
+  .burs-hero__chip--students span strong {
+    font-size: 20px;
   }
 }
 
@@ -554,7 +606,16 @@
     white-space: normal;
   }
   .burs-hero__sub {
-    font-size: 14px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .burs-hero__chip--students {
+    font-size: 15px;
+  }
+  .burs-hero__chip--students span strong {
+    font-size: 18px;
   }
   .burs-hero__totals {
     flex-direction: column;
