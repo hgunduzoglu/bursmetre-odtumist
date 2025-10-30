@@ -212,7 +212,19 @@ $col_full_name  = bursmetre_find_column($burs_headers, ['ad soyad', 'isim soyisi
 $col_dept       = bursmetre_find_column($burs_headers, ['bolum', 'bölüm', 'department', 'dept']);
 $col_one_time   = bursmetre_find_column($burs_headers, ['tek seferlik', 'tekseferlik']);
 $col_recurring  = bursmetre_find_column($burs_headers, ['duzenli', 'düzenli', 'regular']);
-$col_total      = bursmetre_find_column($burs_headers, ['toplam bagis', 'toplam bağış', 'toplam', 'bagis']);
+$col_total      = bursmetre_find_column($burs_headers, ['toplambagis', 'toplam bagis', 'toplam', 'bagis']);
+
+$col_total_slug = $col_total ? bursmetre_slug($col_total) : '';
+if ($col_total && (strpos($col_total_slug, 'toplam') === false || strpos($col_total_slug, 'bag') === false)) {
+    foreach ($burs_headers as $header) {
+        $slug = bursmetre_slug($header);
+        if ($slug !== '' && strpos($slug, 'toplam') !== false && strpos($slug, 'bag') !== false) {
+            $col_total = $header;
+            $col_total_slug = $slug;
+            break;
+        }
+    }
+}
 $col_donor      = bursmetre_find_column($burs_headers, ['bagisci', 'bağışçı', 'donor', 'bagisci sayisi']);
 $col_date       = bursmetre_find_column($burs_headers, ['tarih', 'date']);
 
@@ -274,12 +286,14 @@ if ($burs_rows) {
 }
 
 // Enrich campaigns with metadata from kamp sheet.
+$total_campaign_rows = 0;
 if ($kamp_rows) {
     foreach ($kamp_rows as $row) {
         $name = bursmetre_get_value($row, $kamp_headers, $col_k_name);
         if ($name === '') {
             continue;
         }
+        $total_campaign_rows++;
 
         $key = bursmetre_slug($name);
         if ($key === '') {
@@ -347,16 +361,7 @@ foreach ($campaigns as $campaign) {
 arsort($dept_totals);
 
 // Metrics.
-$active_campaigns    = 0;
-$completed_campaigns = 0;
-foreach ($campaigns as $campaign) {
-    if ($campaign['amount'] > 0) {
-        $active_campaigns++;
-    }
-    if ($campaign['goal'] > 0 && $campaign['amount'] >= $campaign['goal']) {
-        $completed_campaigns++;
-    }
-}
+$active_campaigns = $total_campaign_rows;
 
 $progress = ($goal > 0)
     ? min(100, round(($total_donation / $goal) * 100, 1))
@@ -415,9 +420,7 @@ foreach ($dept_totals as $dept => $value) {
     ];
 }
 
-$hero_caption = $completed_campaigns > 0
-    ? sprintf('%d kampanya hedefini tamamladı', $completed_campaigns)
-    : sprintf('%d kampanya şu anda aktif', $active_campaigns);
+$hero_caption = sprintf('%d kampanya aktif', $active_campaigns);
 
 $chart_dept_payload = wp_json_encode(
     [
